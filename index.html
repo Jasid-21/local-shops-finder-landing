@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tu Tienda Local – Únete a la red</title>
+    <style>
+        :root {
+            --text: hsl(207, 69%, 3%);
+            --background: hsl(210, 80%, 98%);
+            --primary: hsl(210, 81%, 21%);
+            --secondary: hsl(240, 71%, 73%);
+            --accent: hsl(253, 71%, 65%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: hsla(from var(--secondary) h s l / 0.7);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--primary);
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        header a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        header a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+
+            position: relative;
+            isolation: isolate;
+        }
+
+        main::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            
+            background: #ffffff;
+            background: radial-gradient(circle, rgb(189, 189, 189) 0%, rgb(80, 80, 80) 100%);
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        main::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("./images/hero_3.jpg");
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(6px);
+            
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+        }
+
+        p {
+            font-size: 1rem;
+            max-width: 700px;
+            color: hsl(195, 7%, 12%);
+            text-shadow: 0 0 5px #999999;
+        }
+
+        form {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        input[type="email"] {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            width: 250px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: var(--secondary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: hsl(207, 14%, 85%);
+            background-color: var(--primary);
+        }
+
+        .success {
+            color: var(--primary);
+            font-weight: 600;
+            margin-top: 1rem;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            input[type="email"] {
+                width: 100%;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Tu Tienda Local</h1>
+    </header>
+
+    <main>
+        <h2>Conecta tu almacén con los compradores locales</h2>
+        <p>
+            Pronto podrás subir los productos de tu tienda y aparecer en los resultados de búsqueda
+            locales. No necesitas vender en línea ni exponer stock o precios.
+        </p>
+
+        <form id="registro" onsubmit="registrarEmail(event)">
+            <input type="email" id="email" placeholder="Ingresa tu correo" required />
+            <button type="submit">Notificarme</button>
+        </form>
+
+        <div id="mensaje"></div>
+    </main>
+
+    <footer>
+        © 2025 Tu Tienda Local — Conecta, muestra y atrae nuevos clientes
+    </footer>
+
+    <script>
+        function registrarEmail(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const mensaje = document.getElementById('mensaje');
+
+            if (!email) return;
+
+            // Aquí podrías integrar un endpoint real (por ejemplo, usando fetch)
+            console.log("Nuevo registro:", email);
+
+            mensaje.textContent = "✅ Gracias por registrarte. Te avisaremos cuando la app esté lista.";
+            mensaje.className = "success";
+
+            e.target.reset();
+        }
+    </script>
+</body>
+
+</html>
