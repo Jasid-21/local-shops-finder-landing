@@ -3,8 +3,12 @@
 
 <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tu Tienda Local – Únete a la red</title>
+    <link rel="shortcut icon" href="/public/favicon.ico">
+    <link rel="icon" type="image/png" sizes="48x48" href="/public/favicon.png">
+    <title>NearShops - Conecta con los clientes locales</title>
+    
     <style>
         :root {
             --text: hsl(207, 69%, 3%);
@@ -35,12 +39,19 @@
             border-bottom: 1px solid var(--primary);
 
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 8px;
 
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 100;
+        }
+
+        header svg {
+            height: 40px;
+            object-fit: contain;
         }
 
         header h1 {
@@ -49,15 +60,7 @@
             font-weight: 700;
         }
 
-        header a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            border: 2px solid var(--primary);
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            transition: background 0.3s, color 0.3s;
-        }
+        
 
         header a:hover {
             background: var(--primary);
@@ -81,8 +84,11 @@
         main::after {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
             background: #ffffff;
             background: radial-gradient(circle, rgb(189, 189, 189) 0%, rgb(80, 80, 80) 100%);
             z-index: -1;
@@ -92,7 +98,10 @@
         main::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background-image: url("./images/hero_3.jpg");
             background-position: center;
             background-size: cover;
@@ -100,7 +109,7 @@
             z-index: -1;
             opacity: 0.5;
             filter: blur(6px);
-            
+
         }
 
         h2 {
@@ -191,11 +200,12 @@
 
 <body>
     <header>
-        <h1>Tu Tienda Local</h1>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+        <h1>NearShops</h1>
     </header>
 
     <main>
-        <h2>Conecta tu almacén con los compradores locales</h2>
+        <h2>Conecta tu comercio con los clientes locales</h2>
         <p>
             Pronto podrás subir los productos de tu tienda y aparecer en los resultados de búsqueda
             locales. No necesitas vender en línea ni exponer stock o precios.
@@ -210,21 +220,42 @@
     </main>
 
     <footer>
-        © 2025 Tu Tienda Local — Conecta, muestra y atrae nuevos clientes
+        © 2025 NearShops — Conecta, muestra y atrae nuevos clientes
     </footer>
 
     <script>
-        function registrarEmail(e) {
+        async function registrarEmail(e) {
             e.preventDefault();
-            const email = document.getElementById('email').value.trim();
-            const mensaje = document.getElementById('mensaje');
 
+            const email = document.getElementById('email').value.trim();
             if (!email) return;
 
-            // Aquí podrías integrar un endpoint real (por ejemplo, usando fetch)
+            const form = e.target;
+            const formData = new FormData(form);
+            formData.append('service_id', 'service_ztqgljk');
+            formData.append('template_id', 'template_9o8t1xq');
+            formData.append('user_id', 'mMtSc3MSYDiJ64l2v');
+            formData.append('from_email', email);
+
+            const resp = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    service_id: 'service_ztqgljk',
+                    template_id: 'template_9o8t1xq',
+                    user_id: 'mMtSc3MSYDiJ64l2v',
+                    template_params: {
+                        from_email: email,
+                    }
+                }),
+            })
+
+            const mensaje = document.getElementById('mensaje');
             console.log("Nuevo registro:", email);
 
-            mensaje.textContent = "✅ Gracias por registrarte. Te avisaremos cuando la app esté lista.";
+            mensaje.textContent = "Gracias por registrarte. Te avisaremos cuando la app esté lista.";
             mensaje.className = "success";
 
             e.target.reset();
